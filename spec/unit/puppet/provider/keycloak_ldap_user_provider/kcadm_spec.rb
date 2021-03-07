@@ -26,20 +26,6 @@ describe Puppet::Type.type(:keycloak_ldap_user_provider).provider(:kcadm) do
     end
   end
 
-  describe 'self.prefetch' do
-    it 'returns instance by name' do
-      skip('not working')
-      props = { name: 'foo on test', resource_name: 'foo', realm: 'test', id: 'foo-test' }
-      instances = [described_class.new(props)]
-      resources = {
-        'foo on test' => type.new(props),
-      }
-      allow(described_class).to receive(:instances).and_return(instances)
-      expect(resource).to receive(:provider=).with(described_class)
-      described_class.prefetch(resources)
-    end
-  end
-
   #   describe 'self.prefetch' do
   #     let(:instances) do
   #       all_realms.map { |f| described_class.new(f) }

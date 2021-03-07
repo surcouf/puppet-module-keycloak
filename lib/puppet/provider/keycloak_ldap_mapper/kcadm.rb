@@ -105,7 +105,7 @@ Puppet::Type.type(:keycloak_ldap_mapper).provide(:kcadm, parent: Puppet::Provide
       data = []
     end
     data.each do |d|
-      next unless d['propertyType'] == 'org.keycloak.storage.UserStorageProvider'
+      next unless d['providerType'] == 'org.keycloak.storage.UserStorageProvider'
       if d['name'] == ldap
         parent_id = d['id']
       end

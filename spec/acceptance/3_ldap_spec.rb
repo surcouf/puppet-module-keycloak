@@ -328,9 +328,9 @@ describe 'keycloak_ldap_user_provider:', if: RSpec.configuration.keycloak_full d
         ldaps           => false,
       }
       keycloak::freeipa_ldap_mappers { 'ipa.example.org':
-        realm => 'test',
+        realm     => 'test',
         groups_dn => 'cn=groups,cn=accounts,dc=example,dc=org',
-        roles_dn => 'cn=groups,cn=accounts,dc=example,dc=org',
+        roles_dn  => 'cn=groups,cn=accounts,dc=example,dc=org',
       }
       EOS
 
@@ -342,11 +342,14 @@ describe 'keycloak_ldap_user_provider:', if: RSpec.configuration.keycloak_full d
   context 'ID migration' do
     it 'sets up migration' do
       clean_pp = <<-EOS
-      keycloak_ldap_user_provider { 'LDAP on test':
+      keycloak_realm { 'test':
         ensure => 'absent',
       }
       EOS
       before_pp = <<-EOS
+      keycloak_realm { 'test':
+        ensure => 'present',
+      }
       keycloak_ldap_user_provider { 'LDAP on test':
         id                        => 'LDAP-test',
         users_dn                  => 'ou=People,dc=test',
@@ -385,6 +388,9 @@ describe 'keycloak_ldap_user_provider:', if: RSpec.configuration.keycloak_full d
 
     it 'performs migration' do
       after_pp = <<-EOS
+      keycloak_realm { 'test':
+        ensure => 'present',
+      }
       keycloak_ldap_user_provider { 'LDAP-remove on test':
         ensure        => 'absent',
         resource_name => 'LDAP',
